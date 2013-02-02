@@ -245,20 +245,17 @@ var _Generator = function() {
         Generator.getHTML().sub.selectChooseCodeAreaLanguage = Generator.createBodySelectElement("chooseCodeAreaLanguage", "language");
         // TODO: pr zmieniono na ps, sprawdzic zgodnosc
         Generator.getHTML().sub.optionChooseCodeAreaLanguage = [];
-        Generator.getHTML().sub.optionChooseCodeAreaLanguage[0] = Generator.createBodyOptionElement("ps", "pseudo");
-        Generator.getHTML().sub.optionChooseCodeAreaLanguage[1] = Generator.createBodyOptionElement("js", "javascript");
-        Generator.getHTML().sub.optionChooseCodeAreaLanguage[2] = Generator.createBodyOptionElement("cpp", "cpp");
-        Generator.getHTML().sub.optionChooseCodeAreaLanguage[3] = Generator.createBodyOptionElement("java", "java");
+
+
+
+
 
         Generator.getHTML().bodyElem.divExecutionAreaLanguageChoice = Generator.createBodyDivElement("executionAreaLanguageChoice", "", "");
         Generator.getHTML().sub.labelForExecutionAreaLanguageChoice = Generator.createBodyLabelElement("labelForExecutionAreaLanguageChoice", "chooseExecutionAreaLanguage", "Execution Area Language Choice");
         Generator.getHTML().sub.selectChooseExecutionAreaLanguage = Generator.createBodySelectElement("chooseExecutionAreaLanguage", "language");
         // TODO: pr zmieniono na ps, sprawdzic zgodnosc
         Generator.getHTML().sub.optionChooseExecutionAreaLanguage = [];
-        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[0] = Generator.createBodyOptionElement("ps", "pseudo");
-        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[1] = Generator.createBodyOptionElement("js", "javascript");
-        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[2] = Generator.createBodyOptionElement("cpp", "cpp");
-        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[3] = Generator.createBodyOptionElement("java", "java");
+
 
         Generator.getHTML().bodyElem.spanTiming = Generator.createBodySpanElement("timing", "Czas: 0.000 s");
 
@@ -284,28 +281,46 @@ var _Generator = function() {
         Generator.getHTML().bodyElem.scriptPlugins = Generator.createBodyScriptElement("js/plugins.js");
         Generator.getHTML().bodyElem.scriptMsg = Generator.createBodyScriptElement("js/static/Msg.js");
         Generator.getHTML().bodyElem.scriptCodeClass = Generator.createBodyScriptElement("js/static/Code.class.js");
-        Generator.getHTML().bodyElem.scriptCommandsClass = Generator.createBodyScriptElement("js/static/Commands.class.js");
         Generator.getHTML().bodyElem.scriptLanguageClass = Generator.createBodyScriptElement("js/static/Language.class.js");
         Generator.getHTML().bodyElem.scriptOperatorClass = Generator.createBodyScriptElement("js/static/Operator.class.js");
         Generator.getHTML().bodyElem.scriptTreeDefinitionClass = Generator.createBodyScriptElement("js/static/TreeDefinition.class.js");
 
         Generator.getHTML().bodyElem.scriptParser = Generator.createBodyScriptElement("js/dynamic/Parser.class.js");
+        Generator.getHTML().bodyElem.scriptLexerClass = Generator.createBodyScriptElement("js/dynamic/Lexer.class.js");
         Generator.getHTML().bodyElem.scriptUI = Generator.createBodyScriptElement("js/dynamic/UI.js");
         Generator.getHTML().bodyElem.scriptCompilerClass = Generator.createBodyScriptElement("js/dynamic/Compiler.class.js");
         Generator.getHTML().bodyElem.scriptInterpreterClass = Generator.createBodyScriptElement("js/dynamic/Interpreter.class.js");
-        Generator.getHTML().bodyElem.scriptLexerClass = Generator.createBodyScriptElement("js/dynamic/Lexer.class.js");
         Generator.getHTML().bodyElem.scriptMemoryClass = Generator.createBodyScriptElement("js/dynamic/Memory.class.js");
-        Generator.getHTML().bodyElem.scriptMethodsClass = Generator.createBodyScriptElement("js/dynamic/Methods.class.js");
         Generator.getHTML().bodyElem.scriptPreprocessorClass = Generator.createBodyScriptElement("js/dynamic/Preprocessor.class.js");
         Generator.getHTML().bodyElem.scriptTranslatorClass = Generator.createBodyScriptElement("js/dynamic/Translator.class.js");
         Generator.getHTML().bodyElem.scriptVirtualMachine = Generator.createBodyScriptElement("js/dynamic/VirtualMachine.js");
-        Generator.getHTML().bodyElem.scriptLexing = Generator.createBodyScriptElement("js/dynamic/lexing.js");
-        Generator.getHTML().bodyElem.scriptPreprocessing = Generator.createBodyScriptElement("js/dynamic/preprocessing.js");
-
-
 
         Generator.appendToHTML();
+
     };
+
+    this.loadLanguages = function(languagesList){
+
+        languagesList.map(function(l,i){Generator.getHTML().sub.optionChooseCodeAreaLanguage[i] = Generator.createBodyOptionElement(i, l.name);});
+
+        Generator.getHTML().bodyElem.divCodeAreaLanguageChoice.appendChild(Generator.getHTML().sub.labelForCodeAreaLanguageChoice);
+        for (var i = 0; i < 4; i++) {
+            Generator.getHTML().sub.selectChooseCodeAreaLanguage.appendChild(Generator.getHTML().sub.optionChooseCodeAreaLanguage[i]);
+        }
+        Generator.getHTML().sub.optionChooseCodeAreaLanguage[0].selected = true;  //nice HTML 5 implementation
+        Generator.getHTML().bodyElem.divCodeAreaLanguageChoice.appendChild(Generator.getHTML().sub.selectChooseCodeAreaLanguage);
+        Generator.getHTML().sub.selectChooseCodeAreaLanguage.setAttribute("onchange", "UI.chooseCodeLanguage(aviableLanguages[selectedIndex]);");
+        languagesList.map(function(l,i){Generator.getHTML().sub.optionChooseExecutionAreaLanguage[i] = Generator.createBodyOptionElement(i, l.name);});
+
+        Generator.getHTML().bodyElem.divExecutionAreaLanguageChoice.appendChild(Generator.getHTML().sub.labelForExecutionAreaLanguageChoice);
+        for (var i = 0; i < 4; i++) {
+            Generator.getHTML().sub.selectChooseExecutionAreaLanguage.appendChild(Generator.getHTML().sub.optionChooseExecutionAreaLanguage[i]);
+        }
+        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[0].selected = true;  //nice HTML 5 implementation
+        Generator.getHTML().bodyElem.divExecutionAreaLanguageChoice.appendChild(Generator.getHTML().sub.selectChooseExecutionAreaLanguage);
+        Generator.getHTML().sub.selectChooseExecutionAreaLanguage.setAttribute("onchange", "UI.chooseExecutionLanguage(aviableLanguages[selectedIndex]);");
+
+    }
 
     this.appendToHTML = function() {
 
@@ -318,22 +333,6 @@ var _Generator = function() {
 
         Generator.getHTML().bodyElem.header.appendChild(Generator.getHTML().sub.tableInHeader);
 
-
-        Generator.getHTML().bodyElem.divCodeAreaLanguageChoice.appendChild(Generator.getHTML().sub.labelForCodeAreaLanguageChoice);
-        for (var i = 0; i < 4; i++) {
-            Generator.getHTML().sub.selectChooseCodeAreaLanguage.appendChild(Generator.getHTML().sub.optionChooseCodeAreaLanguage[i]);
-        }
-        Generator.getHTML().sub.optionChooseCodeAreaLanguage[0].selected = true;  //nice HTML 5 implementation
-        Generator.getHTML().bodyElem.divCodeAreaLanguageChoice.appendChild(Generator.getHTML().sub.selectChooseCodeAreaLanguage);
-        Generator.getHTML().sub.selectChooseCodeAreaLanguage.setAttribute("onchange", "UI.chooseCodeLanguage(this.options[selectedIndex].text);");
-
-        Generator.getHTML().bodyElem.divExecutionAreaLanguageChoice.appendChild(Generator.getHTML().sub.labelForExecutionAreaLanguageChoice);
-        for (var i = 0; i < 4; i++) {
-            Generator.getHTML().sub.selectChooseExecutionAreaLanguage.appendChild(Generator.getHTML().sub.optionChooseExecutionAreaLanguage[i]);
-        }
-        Generator.getHTML().sub.optionChooseExecutionAreaLanguage[1].selected = true;  //nice HTML 5 implementation
-        Generator.getHTML().bodyElem.divExecutionAreaLanguageChoice.appendChild(Generator.getHTML().sub.selectChooseExecutionAreaLanguage);
-        Generator.getHTML().sub.selectChooseExecutionAreaLanguage.setAttribute("onchange", "UI.chooseExecutionLanguage(this.options[selectedIndex].text);");
 
         Generator.getHTML().bodyElem.divCodeContainer.appendChild(Generator.getHTML().sub.labelForCodeContainer);
         Generator.getHTML().bodyElem.divCodeContainer.appendChild(Generator.getHTML().sub.textareaCodeArea);
@@ -367,7 +366,11 @@ if (!window.addEventListener) {
 }
 
 var Generator = new _Generator();
-console.log(Generator);
+
+Generator.afterGeneration = function(){
+
+}
+
 addListener(document, "DOMContentLoaded", Generator.generate);
 
 
